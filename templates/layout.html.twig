@@ -13,16 +13,16 @@
 <body>
     <div class="container">
         <header>
-            <a class="site-title" href="{{ path('home') }}" title="Bucket-List | Home">
-                <img src="{{ asset('img/logo.png') }}" alt="Bucket-List"> Bucket-List
-            </a>
+            {#<a class="site-title" href="{{ path('home') }}" title="Bucket-List | Home">#}
+                {#<img src="{{ asset('img/logo.png') }}" alt="Bucket-List"> Bucket-List#}
+            {#</a>#}
             <nav>
                 <ul>
-                    <li><a href="{{ path("home") }}" title="Bucket-List | Home">Home</a></li>
-                    <li><a href="{{ path("aboutUs") }}" title="Bucket-List | About Us">About Us</a></li>
-                    <li><a href="{{ path("idea") }}" title="Bucket-List | Idea">Idea</a></li>
-                    <li><a href="{{ path("category") }}" title="Bucket-List | Category">Category</a></li>
-                    <li><a href="{{ path("download") }}" title="Bucket-List | Download">Download</a></li>
+                    {#<li><a href="{{ path("home") }}" title="Bucket-List | Home">Home</a></li>#}
+                    {#<li><a href="{{ path("aboutUs") }}" title="Bucket-List | About Us">About Us</a></li>#}
+                    {#<li><a href="{{ path("idea") }}" title="Bucket-List | Idea">Idea</a></li>#}
+                    {#<li><a href="{{ path("category") }}" title="Bucket-List | Category">Category</a></li>#}
+                    {#<li><a href="{{ path("download") }}" title="Bucket-List | Download">Download</a></li>#}
                     <li><a href="#" title="Test">Test</a></li>
                 </ul>
             </nav>
@@ -43,12 +43,10 @@
         </main>
 
         <footer>
-            © {{ "now"|date("Y") }} Bucket-List
+            © {{ "now"|date("Y") }} Medai-Player
 
             <div class="license">
-                By Fabien Alexis (https://github.com/fabianalexisinostroza/Antu-icons)<br>
-                [<a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank">CC BY-SA 3.0</a>],<br>
-                <a href="https://commons.wikimedia.org/wiki/File%3AAntu_color-fill.svg" target="_blank">via Wikimedia Commons</a>
+                By Maelien PECHAUD & Elie Cosnier <br>
             </div>
         </footer>
         <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}">
