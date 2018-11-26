@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Entity\TypeMedia;
 use App\Form\TypeMediaType;
 use Doctrine\ORM\EntityManagerInterface;
-use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Node\Expression\Binary\EndsWithBinary;
 
@@ -40,7 +40,7 @@ class TypeMediaController extends Controller
         }
 
         return $this->render('type_media/add.html.twig', [
-            'categoryForm' => $typeMediaForm->createView()
+            'typeMediaForm' => $typeMediaForm->createView()
         ]);
     }
 
@@ -60,7 +60,7 @@ class TypeMediaController extends Controller
         }
 
         return $this->render('type_media/add.html.twig', [
-            'categoryForm' => $typeMediaForm->createView()
+            'typeMediaForm' => $typeMediaForm->createView()
         ]);
     }
 
@@ -71,12 +71,12 @@ class TypeMediaController extends Controller
     public function delete(EntityManagerInterface $em, TypeMedia $typeMedia) {
         if(count($typeMedia->getIdeas()) > 0){
             $this->addFlash('error', "You can't delete this type media!!");
-            return $this->redirectToRoute('type_list');
+            return $this->redirectToRoute('type_media');
         }
 
         $em->remove($typeMedia);
         $em->flush();
         $this->addFlash("success", "Type Media successfully deleted!");
-        return $this->redirectToRoute("type_list");
+        return $this->redirectToRoute("type_media");
     }
 }
