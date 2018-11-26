@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MediaController extends Controller
 {
     /**
-     * @Route("/media", name="media")
+     * @Route("/admin/media", name="media")
      */
     public function list(EntityManagerInterface $em) {
         $media =$em->getRepository(Media::class)->findAll();
@@ -22,7 +22,7 @@ class MediaController extends Controller
     }
 
     /**
-     * @Route("/media/create", name="media_create")
+     * @Route("/admin/media/create", name="media_create")
      */
     public function create(Request $request, EntityManagerInterface $em) {
         $media = new Media();
@@ -43,7 +43,7 @@ class MediaController extends Controller
     }
 
     /**
-     * @Route("/media/update/{id}", name="media_update", requirements={"id":"\d+"})
+     * @Route("/admin/media/update/{id}", name="media_update", requirements={"id":"\d+"})
      */
     public function update(Media $media, Request $request, EntityManagerInterface $em) {
         $mediaForm = $this->createForm(MediaType::class, $media);
@@ -63,8 +63,8 @@ class MediaController extends Controller
     }
 
     /**
-     * @Route("/media/delete", name="media_delele_default", defaults={"id":0})
-     * @Route("/media/delete/{id}", name="media_delete", requirements={"id":"\d+"})
+     * @Route("/admin/media/delete", name="media_delele_default", defaults={"id":0})
+     * @Route("/admin/media/delete/{id}", name="media_delete", requirements={"id":"\d+"})
      */
     public function delete(EntityManagerInterface $em, Media $media) {
         if(count($media->getIdeas()) > 0){
