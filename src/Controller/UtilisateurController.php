@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UtilisateurController extends Controller
 {
     /**
-     * @Route("/utilisateur", name="utilisateur")
+     * @Route("/admin/utilisateur", name="utilisateur")
      */
     public function index()
     {
@@ -23,71 +23,58 @@ class UtilisateurController extends Controller
     }
 
     /**
-     * @Route("/listusers", name="listusers")
+     * @Route("/admin/register", name="main_register")
      */
-    public function list(EntityManagerInterface $em)
-    {
-        $repo = $em->getRepository(Utilisateur::class);
-        $users = $repo->findAll();
-        return $this->render('utilisateur/list.html.twig', ["genres" => $users]);
-    }
+    public function registration(Request $request,
+                                 UserPasswordEncoderInterface $encoder,
+                                 EntityManagerInterface $em){
 
-    /**
-     * @Route("//deleteuser/{id}")
-     */
-    public function delete(Utilisateur $utilisateur ,EntityManagerInterface $em){
-
-        $em->remove($utilisateur);
-        $em->flush();
-
-        return new Response("Delete user");
-    }
-
-    /**
-     * @Route("/createuser", name="createuser")
-     */
-    public function create(EntityManagerInterface $em, Request $request){
         $user = new Utilisateur();
-        $UserForm = $this->createForm(UtilisateurType::class, $user);
-        $UserForm->handleRequest($request);
 
-        if($UserForm->isSubmitted() && $UserForm->isValid()){
+        $form = $this->createForm(UtilisateurType::class, $user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            //crypter le mot de passe
+            $pass = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($pass);
+            $user->setRoles(['ROLE_USER']);
+
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', "l'user a été ajouté !");
-
-            return $this->redirectToRoute('listuser');
+            return $this->redirectToRoute('main_index');
 
         }
-        return $this->render('utilisateur/create.html.twig',
-            ['$UserForm' => $UserForm->createView()]
-        );
+
+        return $this->render('main/register.html.twig', [
+            'form' => $form->createView()
+        ]);
+
     }
 
     /**
-     * @Route("/updateuser/{id}", name="updateuser", requirements={"id"="\d+"})
+     * @Route("/login", name="login")
      */
-    public function update($id, EntityManagerInterface $em, Request $request){
-        //$repo = $this->getDoctrine()->getRepository(Serie::class);
-        $repo = $em->getRepository(Utilisateur::class);
+    public function login(AuthenticationUtils $authenticationUtils)
+    {
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
 
-        $user = $repo->find($id);
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
 
-        $userForm = $this->createForm(UtilisateurType::class, $user)
-            ->handleRequest($request);
-
-        if($userForm->isSubmitted() && $userForm->isValid()){
-            $em->persist($user);
-            $em->flush();
-
-            $this->addFlash('success', "l'utilisateur a été mise à jour !");
-
-            return $this->redirectToRoute('list');
-
-        }
-        return $this->render('utilisateur/update.html.twig',
-            ['userForm' => $userForm->createView()]
-        );
+        return $this->render('main/login.html.twig', array(
+            'last_username' => $lastUsername,
+            'error'         => $error,
+        ));
     }
+
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logout(){
+
+    }
+
 }

@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GenreController extends Controller
 {
     /**
-     * @Route("/genre", name="genre")
+     * @Route("/admin/genre", name="genre")
      */
     public function index()
     {
@@ -23,7 +23,7 @@ class GenreController extends Controller
     }
 
     /**
-     * @Route("/listgenre", name="listgenre")
+     * @Route("/admin/listgenre", name="listgenre")
      */
     public function list(EntityManagerInterface $em)
     {
@@ -33,7 +33,7 @@ class GenreController extends Controller
     }
 
     /**
-     * @Route("//deleteGenre/{id}")
+     * @Route("/admin/deleteGenre/{id}")
      */
     public function delete(Genre $genre ,EntityManagerInterface $em){
 
@@ -44,7 +44,7 @@ class GenreController extends Controller
     }
 
     /**
-     * @Route("/createGebre", name="create")
+     * @Route("/admin/createGebre", name="create")
      */
     public function create(EntityManagerInterface $em, Request $request){
         $genre = new Genre();
@@ -66,7 +66,7 @@ class GenreController extends Controller
     }
 
     /**
-     * @Route("/updateGenre/{id}", name="update", requirements={"id"="\d+"})
+     * @Route("/admin/updateGenre/{id}", name="update", requirements={"id"="\d+"})
      */
     public function update($id, EntityManagerInterface $em, Request $request){
         //$repo = $this->getDoctrine()->getRepository(Serie::class);

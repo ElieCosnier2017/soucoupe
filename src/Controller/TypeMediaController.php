@@ -13,7 +13,7 @@ use Twig\Node\Expression\Binary\EndsWithBinary;
 class TypeMediaController extends Controller
 {
     /**
-     * @Route("/type-media", name="type_media")
+     * @Route("/admin/type-media", name="type_media")
      */
     public function list(EntityManagerInterface $em) {
         $typesMedia =$em->getRepository(TypeMedia::class)->findAll();
@@ -24,7 +24,7 @@ class TypeMediaController extends Controller
     }
 
     /**
-     * @Route("/type-media/create", name="type_media_create")
+     * @Route("/admin/type-media/create", name="type_media_create")
      */
     public function create(Request $request, EntityManagerInterface $em) {
         $typeMedia = new TypeMedia();
@@ -45,7 +45,7 @@ class TypeMediaController extends Controller
     }
 
     /**
-     * @Route("/type-media/update/{id}", name="type_media_update", requirements={"id":"\d+"})
+     * @Route("/admin/type-media/update/{id}", name="type_media_update", requirements={"id":"\d+"})
      */
     public function update(TypeMedia $typeMedia, Request $request, EntityManagerInterface $em) {
         $typeMediaForm = $this->createForm(TypeMediaType::class, $typeMedia);
@@ -65,8 +65,8 @@ class TypeMediaController extends Controller
     }
 
     /**
-     * @Route("/type_media/delete", name="type_media_delele_default", defaults={"id":0})
-     * @Route("/type_media/delete/{id}", name="type_media_delete", requirements={"id":"\d+"})
+     * @Route("/admin/type_media/delete", name="type_media_delele_default", defaults={"id":0})
+     * @Route("/admin/type_media/delete/{id}", name="type_media_delete", requirements={"id":"\d+"})
      */
     public function delete(EntityManagerInterface $em, TypeMedia $typeMedia) {
         if(count($typeMedia->getIdeas()) > 0){
