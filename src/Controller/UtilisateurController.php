@@ -64,6 +64,7 @@ class UtilisateurController extends Controller
 
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
+        dump ($lastUsername);
 
         return $this->render('main/login.html.twig', array(
             'last_username' => $lastUsername,
