@@ -24,7 +24,7 @@ class UtilisateurController extends Controller
     }
 
     /**
-     * @Route("/admin/register", name="main_register")
+     * @Route("/register", name="main_register")
      */
     public function registration(Request $request,
                                  UserPasswordEncoderInterface $encoder,
