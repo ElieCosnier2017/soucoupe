@@ -3,41 +3,67 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
+ * @ORM\Table(name="utilisateur")
+ *
+ * @UniqueEntity(fields={"email"}, message="This email is already registered here!")
+ * @UniqueEntity(fields={"username"}, message="This username is not available!")
+ *
  * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
  */
-class Utilisateur
+class Utilisateur implements UserInterface
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=155)
      */
     private $lastname;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=155)
      */
     private $firstname;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @Assert\Email(message="Your email is not valid!")
+     *
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 55,
+     *      minMessage = "Your username must be at least {{ limit }} characters long",
+     *      maxMessage = "Your username cannot be longer than {{ limit }} characters"
+     * )
+     * @Assert\Regex(pattern="/^[a-z0-9_-]+$/i", message="Your username must contains only letters, numbers, underscores and dashes!")
+     *
+     * @ORM\Column(type="string", length=55, unique=true)
      */
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 6,
+     *      max = 4096,
+     *      minMessage = "Your password must be at least {{ limit }} characters long",
+     *      maxMessage = "Your password cannot be longer than {{ limit }} characters"
+     * )
+     *
+     * @ORM\Column(type="string", length=64)
      */
     private $password;
 
@@ -46,35 +72,6 @@ class Utilisateur
      */
     private $roles = [];
 
-    /**
-     * @return mixed
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-    /**
-     * @param mixed $roles
-     */
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
-        return $this;
-    }
-
-    public function addRole($role): self {
-        $roles = $this->roles;
-        $roles[] = $role;
-        $this->roles = array_unique($roles);
-
-        return $this;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getLastname(): ?string
     {
@@ -135,6 +132,30 @@ class Utilisateur
 
         return $this;
     }
+
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    public function setRoles($roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function addRole($role): self
+    {
+        $roles = $this->roles;
+        $roles[] = $role;
+        $this->roles = array_unique($roles);
+
+        return $this;
+    }
+
+    public function getSalt(){return null;}
+    public function eraseCredentials(){}
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Media", mappedBy="utilisateurs")

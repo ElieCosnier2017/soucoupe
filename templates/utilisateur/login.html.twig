@@ -1,0 +1,27 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Music Player - Login {% endblock %}
+
+{% block main %}
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h2 class="card-title text-center" style="margin-bottom: 25px">Sign In</h2>
+                    <form class="form-signin" action="{{ path('login') }}" method="post">
+                        <label for="inputEmail" class="sr-only">Username</label>
+                        <input type="text" id="username" name="_username" class="form-control" placeholder="Username" required="" autofocus="">
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" id="password" name="_password" class="form-control" placeholder="Password" style="margin-top: 10px;" required="">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        <hr class="my-4">
+                        <button class="btn btn-lg btn-outline-primary btn-block" type="submit">Sign in</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,6 +1,6 @@
 security:
     encoders:
-        App\Entity\User:
+        App\Entity\Utilisateur:
             algorithm: bcrypt
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
@@ -24,7 +24,7 @@ security:
             logout_on_user_change: true
             logout:
                 path: logout
-                target: main_index
+                target: index
 
             # activate different ways to authenticate
 
@@ -39,5 +39,5 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
     - { path: ^/admin, roles: ROLE_ADMIN }
-    - { path: ^/private, roles: ROLE_USER }
+    - { path: ^/test, roles: ROLE_USER }
     - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }

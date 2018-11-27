@@ -13,7 +13,7 @@ use Twig\Node\Expression\Binary\EndsWithBinary;
 class TypeMediaController extends Controller
 {
     /**
-     * @Route("/admin/type-media", name="type_media")
+     * @Route("/type", name="type_media")
      */
     public function list(EntityManagerInterface $em) {
         $typesMedia =$em->getRepository(TypeMedia::class)->findAll();
