@@ -73,6 +73,11 @@ class Utilisateur implements UserInterface
     private $roles = [];
 
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function getLastname(): ?string
     {
         return $this->lastname;

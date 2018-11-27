@@ -1,0 +1,35 @@
+{%  extends 'layout.html.twig' %}
+
+{% block main %}
+<div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+            <div class="card-body">
+                <h2 class="card-title text-center" style="margin-bottom: 25px">Edit User</h2>
+                <form action="{{ path('edit_user', {id : user.id}) }}" method="post">
+                    <div>
+                        {{ form_row(form.lastname) }}
+                    </div>
+                    <div>
+                        {{ form_row(form.firstname) }}
+                    </div>
+                    <div>
+                        {{ form_row(form.email) }}
+                    </div>
+
+                    <hr class="my-4">
+                    <button class="btn btn-lg btn-outline-success btn-block" type="submit">Update</button>
+                </form>
+                <div>
+                    <label for="select_admin" class="require">Roles</label>
+                    <br>
+                    <select id="select_admin" class="selectpicker" multiple>
+                        <option>Admin</option>
+                        <option>User</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

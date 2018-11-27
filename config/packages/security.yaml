@@ -24,7 +24,7 @@ security:
             logout_on_user_change: true
             logout:
                 path: logout
-                target: index
+                target: home
 
             # activate different ways to authenticate
 

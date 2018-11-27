@@ -22,11 +22,42 @@ class UtilisateurController extends Controller
     }
 
     /**
+     * @Route("/listuser", name="list_user")
+     */
+    public function listuser(EntityManagerInterface $em){
+
+        $allUsers = $em->getRepository(Utilisateur::class)->findAll();
+        return $this->render("utilisateur/list.html.twig", ["allUsers" => $allUsers]);
+    }
+
+    /**
+     * @Route("/edituser/{id}", name="edit_user", requirements={"id":"\d+"})
+     */
+    public function edituser($id, Request $request, EntityManagerInterface $em){
+
+        $repo = $em->getRepository(Utilisateur::class);
+        $user = $repo->find($id);
+        $form = $this->createForm(UtilisateurType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            dump($form);
+//            $em->persist($user);
+//            $em->flush();
+//
+//            $this->addFlash("success", "Your account has been created!");
+//            return $this->redirectToRoute("login");
+        }
+
+        return $this->render("utilisateur/update.html.twig", ["form" => $form->createView(),"user" => $user]);
+    }
+
+
+    /**
      * @Route("/register", name="register")
      */
-    public function register(Request $request,
-                             UserPasswordEncoderInterface $passwordEncoder,
-                             EntityManagerInterface $em)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
     {
         $user = new Utilisateur();
         $form = $this->createForm(UtilisateurType::class, $user);

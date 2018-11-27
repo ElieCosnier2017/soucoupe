@@ -1,0 +1,36 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Music Player - Login {% endblock %}
+
+{% block main %}
+<div class="row">
+    <h1>List of User</h1>
+    <table class="table">
+        <thead class="table-secondary">
+            <tr>
+                <th scope="col">Lastname</th>
+                <th scope="col">Firstname</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in allUsers %}
+            <tr>
+                <th>{{ user.lastname }}</th>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{% for role in user.roles %}
+                    {{ role }}
+                    {% endfor %}
+                </td>
+                <td><a href="{{ path('edit_user', {'id': user.id}) }}" class="btn btn-outline-secondary">Edit User</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div></div>
+{% endblock %}

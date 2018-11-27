@@ -7,8 +7,9 @@
     <meta name="author" content="">
     <title>{% block title %}Music Player{% endblock %}</title>
 
-    <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/small-business.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
     <link rel="icon" href="{{ asset('img/favicon.png') }}">
 </head>
 <body class="bg-light">
@@ -40,14 +41,15 @@
                         </li>
                     {% endif %}
                     {% if is_granted("ROLE_USER") or is_granted("ROLE_ADMIN")  %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ app.user.username }}
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ path("logout") }}">Logout</a>
-                        </div>
-                    </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ app.user.username }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ path("list_user") }}">List User</a>
+                                <a class="dropdown-item" href="{{ path("logout") }}">Logout</a>
+                            </div>
+                        </li>
                     {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path("register") }}">Register</a>
@@ -83,6 +85,7 @@
         </div>
     </footer>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 </body>
 </html>
