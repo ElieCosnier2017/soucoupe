@@ -31,6 +31,22 @@ class TypeMedia
         return $this->name;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getGenre()
+    {
+        return $this->genre;
+    }
+
+    /**
+     * @param mixed $genre
+     */
+    public function setGenre($genre)
+    {
+        $this->genre = $genre;
+    }
+
     public function setName(string $name): self
     {
         $this->name = $name;

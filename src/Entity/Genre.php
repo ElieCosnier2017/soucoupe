@@ -39,6 +39,38 @@ class Genre
     }
 
     /**
+     * @return mixed
+     */
+    public function getTypemedia()
+    {
+        return $this->typemedia;
+    }
+
+    /**
+     * @param mixed $typemedia
+     */
+    public function setTypemedia($typemedia)
+    {
+        $this->typemedia = $typemedia;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
+     * @param mixed $media
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
+    }
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeMedia", inversedBy="genre")
      */
     private $typemedia;
@@ -47,4 +79,9 @@ class Genre
      * @ORM\OneToMany(targetEntity="App\Entity\Media", mappedBy="genre")
      */
     private $media;
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

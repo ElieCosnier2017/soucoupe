@@ -107,6 +107,38 @@ class Media
     }
 
     /**
+     * @return mixed
+     */
+    public function getUtilisateurs(): ?Utilisateur
+    {
+        return $this->utilisateurs;
+    }
+
+    /**
+     * @param mixed $utilisateurs
+     */
+    public function setUtilisateurs($utilisateurs)
+    {
+        $this->utilisateurs = $utilisateurs;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGenre()
+    {
+        return $this->genre;
+    }
+
+    /**
+     * @param mixed $genre
+     */
+    public function setGenre($genre)
+    {
+        $this->genre = $genre;
+    }
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="media")
      */
     private $utilisateurs;
@@ -115,4 +147,9 @@ class Media
      * @ORM\ManyToOne(targetEntity="App\Entity\Genre", inversedBy="media")
      */
     private $genre;
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

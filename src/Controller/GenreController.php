@@ -23,13 +23,25 @@ class GenreController extends Controller
     }
 
     /**
-     * @Route("/admin/listgenre", name="listgenre")
+     * @Route("/admin/genre/films", name="films")
      */
-    public function list(EntityManagerInterface $em)
-    {
-        $repo = $em->getRepository(Genre::class);
-        $genres = $repo->findAll();
-        return $this->render('genre/list.html.twig', ["genres" => $genres]);
+    public function listFilms(EntityManagerInterface $em) {
+        $genresFilms =$em->getRepository(Genre::class)->findBy(['typemedia'=>1]);
+
+        return $this->render('genre/list.html.twig', [
+            'genres' => $genresFilms
+        ]);
+    }
+
+    /**
+     * @Route("/admin/genre/musiques", name="musiques")
+     */
+    public function listMusiques(EntityManagerInterface $em) {
+        $genresMusiques =$em->getRepository(Genre::class)->findBy(['typemedia'=>2]);
+
+        return $this->render('genre/list.html.twig', [
+            'genres' => $genresMusiques
+        ]);
     }
 
     /**

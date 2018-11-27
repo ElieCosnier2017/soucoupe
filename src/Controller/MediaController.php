@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Media;
+use App\Form\MediaType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,13 +12,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class MediaController extends Controller
 {
     /**
-     * @Route("/admin/media", name="media")
+     * @Route("/admin/media/{id}", name="media", requirements={"id":"\d+"})
      */
-    public function list(EntityManagerInterface $em) {
-        $media =$em->getRepository(Media::class)->findAll();
+    public function listMedia($id, EntityManagerInterface $em) {
+        $medias =$em->getRepository(Media::class)->findBy(['genre'=>$id]);
 
         return $this->render('media/list.html.twig', [
-            'typesMedia' => $media
+            'medias' => $medias
         ]);
     }
 
@@ -27,9 +28,10 @@ class MediaController extends Controller
     public function create(Request $request, EntityManagerInterface $em) {
         $media = new Media();
         $mediaForm = $this->createForm(MediaType::class, $media);
-
+        $utilisateur = $this->getUser();
         $mediaForm->handleRequest($request);
         if($mediaForm->isSubmitted() && $mediaForm->isValid()) {
+            $media->setUtilisateurs($utilisateur);
             $em->persist($media);
             $em->flush();
 
