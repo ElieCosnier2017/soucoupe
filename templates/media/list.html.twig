@@ -1,0 +1,17 @@
+{% extends 'layout.html.twig' %}
+ {% block title %} List of medias {% endblock %}
+
+{% block main %}
+
+    <div class="row">
+        {% for media in medias %}
+            <div class="col-md-3">
+                <div class="card mb-4" id="{{ media.id }}">
+                    <div class="carre">
+                        <p>{{ media.name }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -4,6 +4,10 @@ namespace App\Form;
 
 use App\Entity\Media;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,14 +16,25 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('description')
-            ->add('dateCreated')
-            ->add('picture')
-            ->add('extension')
-            ->add('utilisateurs')
-            ->add('genre')
-        ;
+            ->add('name', TextType::class, array('attr' => array(
+                'class' => 'form-control',
+                'placeholder' => 'name')))
+            ->add('description',TextType::class, array('attr' => array(
+                'class' => 'form-control',
+                'placeholder' => 'ici votre description ...')))
+            ->add('dateCreated', DateTimeType::class, array(
+                'widget' => 'single_text',
+                'attr' => array(
+                    'class' => 'form-control')
+            ))
+            ->add('picture', FileType::class)
+            ->add('extension',TextType::class, array('attr' => array(
+                'class' => 'form-control',
+                'placeholder' => '.png, .mp3, etc ...')))
+//            ->add('utilisateurs')
+            ->add('genre', null, array('attr' => array(
+                'class' => 'form-control'
+            )));
     }
 
     public function configureOptions(OptionsResolver $resolver)
