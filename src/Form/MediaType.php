@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Media;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -28,10 +29,6 @@ class MediaType extends AbstractType
                     'class' => 'form-control')
             ))
             ->add('picture', FileType::class)
-            ->add('extension',TextType::class, array('attr' => array(
-                'class' => 'form-control',
-                'placeholder' => '.png, .mp3, etc ...')))
-//            ->add('utilisateurs')
             ->add('genre', null, array('attr' => array(
                 'class' => 'form-control'
             )));

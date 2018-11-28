@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MediaRepository")
  */
 class Media
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -146,7 +148,7 @@ class Media
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Genre", inversedBy="media")
      */
-    private $genre;
+    public $genre;
 
     public function __toString()
     {

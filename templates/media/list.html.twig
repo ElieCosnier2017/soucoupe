@@ -8,7 +8,13 @@
             <div class="col-md-3">
                 <div class="card mb-4" id="{{ media.id }}">
                     <div class="carre">
+                        <img src="{{ asset('uploads/files/' ~ media.picture) }}">
                         <p>{{ media.name }}</p>
+                    </div>
+                    <div>
+                        <a href="{{ path("media_update", {id : media.id}) }}">
+                            <button class="btn btn-primary">update</button>
+                        </a>
                     </div>
                 </div>
             </div>
