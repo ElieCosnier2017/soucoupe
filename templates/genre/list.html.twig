@@ -3,9 +3,10 @@
 
 {% block main %}
 
+    {#<div class="row carrediv">#}
     <div class="row carrediv">
         {% for genre in genres %}
-            <div class="col-md-3 no-padding">
+            <div class="col-md-2 no-padding">
                 <div class="card " id="{{ genre.id }}">
                     <a href="{{ path("media", {id : genre.id}) }}">
                         <div class="carre">
