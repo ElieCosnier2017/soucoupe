@@ -6,7 +6,7 @@
         <div class="card card-signin my-5">
             <div class="card-body">
                 <h2 class="card-title text-center" style="margin-bottom: 25px">Edit User</h2>
-                <form action="{{ path('edit_user', {id : user.id}) }}" method="post">
+                {{ form_start(form) }}
                     <div>
                         {{ form_row(form.lastname) }}
                     </div>
@@ -16,18 +16,40 @@
                     <div>
                         {{ form_row(form.email) }}
                     </div>
+                    <div>
+                        {{ form_row(form.roles) }}
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                    {#<div>#}
+                        {#<label for="roles" class="require">Roles</label>#}
+                        {#<br>#}
+                        {#<select id="roles" class="selectpicker">#}
+                            {#<option value="ROLE_ADMIN">Admin</option>#}
+                            {#<option value="ROLE_USER">User</option>#}
+                        {#</select>#}
+                    {#</div>#}
 
                     <hr class="my-4">
                     <button class="btn btn-lg btn-outline-success btn-block" type="submit">Update</button>
-                </form>
-                <div>
-                    <label for="select_admin" class="require">Roles</label>
-                    <br>
-                    <select id="select_admin" class="selectpicker" multiple>
-                        <option>Admin</option>
-                        <option>User</option>
-                    </select>
-                </div>
+                {{ form_end(form) }}
+
+                <script>
+                    var val= 0;
+                    {%  for role in user.roles %}
+                        {% if role == 'ROLE_ADMIN' %}
+                            var val = 1;
+                        {% elseif role == 'ROLE_USER' %}
+                            var val = 2;
+                        {% endif %}
+                    {% endfor %}
+                    if(val == 1) {
+                        $('#roles').val('ROLE_ADMIN');
+                    } else if (val == 2) {
+                        $('#roles').val('ROLE_USER');
+                    }
+                </script>
+
             </div>
         </div>
     </div>

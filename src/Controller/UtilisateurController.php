@@ -37,19 +37,21 @@ class UtilisateurController extends Controller
 
         $repo = $em->getRepository(Utilisateur::class);
         $user = $repo->find($id);
-        $form = $this->createForm(UtilisateurType::class, $user);
-
+        $form  = $this->createForm(UtilisateurType::class,$user,['fields' => ['update']]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             dump($form);
-//            $em->persist($user);
-//            $em->flush();
-//
-//            $this->addFlash("success", "Your account has been created!");
-//            return $this->redirectToRoute("login");
-        }
+            if($form['roles']->getData() == null) {
+                $user->setRoles(['ROLE_ADMIN']);
+            } elseif($form['roles']->getData() == true) {
+                $user->setRoles(['ROLE_USER']);
+            }
+            $em->persist($user);
+            $em->flush();
 
+            $this->addFlash("success", "This User account has been update!");
+//            return $this->redirectToRoute("list_user");
+        }
         return $this->render("utilisateur/update.html.twig", ["form" => $form->createView(),"user" => $user]);
     }
 
