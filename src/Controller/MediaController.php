@@ -47,6 +47,8 @@ class MediaController extends Controller
             $media->setUtilisateurs($utilisateur);
             $file = $mediaForm->get('picture')->getData();
             $filename = $this->generateUniqueFileName().'.'.$file->guessExtension();
+            $ext = $file->guessExtension();
+
             // Move the file to the directory where brochures are stored
             try {
                 $file->move(
@@ -56,9 +58,8 @@ class MediaController extends Controller
             } catch (FileException $e) {
                 // ... handle exception if something happens during file upload
             }
-            dump($filename);
-            $ext = $filename.
             $media->setPicture($filename);
+            $media->setExtension($ext);
 
             $em->persist($media);
             $em->flush();
@@ -67,7 +68,7 @@ class MediaController extends Controller
 
             $genreofMedia = new Genre();
             $genreofMedia = $media->getGenre();
-            //return $this->redirectToRoute('media', array('id' => $genreofMedia->getId()));
+            return $this->redirectToRoute('media', array('id' => $genreofMedia->getId()));
         }
 
         return $this->render('media/add.html.twig', [

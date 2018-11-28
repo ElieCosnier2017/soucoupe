@@ -29,10 +29,6 @@ class MediaType extends AbstractType
                     'class' => 'form-control')
             ))
             ->add('picture', FileType::class)
-            ->add('extension',TextType::class, array('attr' => array(
-                'class' => 'form-control',
-                'placeholder' => '.png, .mp3, etc ...')))
-//            ->add('utilisateurs')
             ->add('genre', null, array('attr' => array(
                 'class' => 'form-control'
             )));
