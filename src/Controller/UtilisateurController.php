@@ -14,7 +14,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class UtilisateurController extends Controller
 {
     /**
-     * @Route("/test", name="home")
+     * @Route("/", name="home")
      */
     public function index(){
         return $this->render("main/index.html.twig");
@@ -22,7 +22,7 @@ class UtilisateurController extends Controller
     }
 
     /**
-     * @Route("/listuser", name="list_user")
+     * @Route("/admin/listuser", name="list_user")
      */
     public function listuser(EntityManagerInterface $em){
 
@@ -31,7 +31,7 @@ class UtilisateurController extends Controller
     }
 
     /**
-     * @Route("/edituser/{id}", name="edit_user", requirements={"id":"\d+"})
+     * @Route("/admin/edituser/{id}", name="edit_user", requirements={"id":"\d+"})
      */
     public function edituser($id, Request $request, EntityManagerInterface $em){
 
@@ -40,7 +40,6 @@ class UtilisateurController extends Controller
         $form  = $this->createForm(UtilisateurType::class,$user,['fields' => ['update']]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($form);
             if($form['roles']->getData() == null) {
                 $user->setRoles(['ROLE_ADMIN']);
             } elseif($form['roles']->getData() == true) {
@@ -50,11 +49,23 @@ class UtilisateurController extends Controller
             $em->flush();
 
             $this->addFlash("success", "This User account has been update!");
-//            return $this->redirectToRoute("list_user");
+            return $this->redirectToRoute("list_user");
         }
         return $this->render("utilisateur/update.html.twig", ["form" => $form->createView(),"user" => $user]);
     }
 
+    /**
+         * @Route("/admin/deluser/{id}", name="delete_user")
+     */
+    public function deluser($id,EntityManagerInterface $em)
+    {
+        $repo = $em->getRepository(Utilisateur::class);
+        $utilisateur = $repo->find($id);
+        $em->remove($utilisateur);
+        $em->flush();
+        $this->addFlash("success", "User successfully deleted!");
+        return $this->redirectToRoute("list_user");
+    }
 
     /**
      * @Route("/register", name="register")

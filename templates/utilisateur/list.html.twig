@@ -27,7 +27,9 @@
                     {{ role }}
                     {% endfor %}
                 </td>
-                <td><a href="{{ path('edit_user', {'id': user.id}) }}" class="btn btn-outline-secondary">Edit User</a></td>
+                <td>
+                    <a href="{{ path('edit_user', {'id': user.id}) }}" class="btn btn-outline-secondary">Edit User</a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>

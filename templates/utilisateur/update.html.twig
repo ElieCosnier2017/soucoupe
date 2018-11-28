@@ -21,35 +21,40 @@
                     </div>
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                    {#<div>#}
-                        {#<label for="roles" class="require">Roles</label>#}
-                        {#<br>#}
-                        {#<select id="roles" class="selectpicker">#}
-                            {#<option value="ROLE_ADMIN">Admin</option>#}
-                            {#<option value="ROLE_USER">User</option>#}
-                        {#</select>#}
-                    {#</div>#}
-
                     <hr class="my-4">
-                    <button class="btn btn-lg btn-outline-success btn-block" type="submit">Update</button>
+                    <button class="btn btn-lg btn-outline-success " type="submit">Update</button>
+                    <button class="btn btn-lg btn-outline-danger" data-toggle="modal" data-id="{{ user.id }}" data-target="#delUser"><span class="oi oi-trash"></span></button>
+
                 {{ form_end(form) }}
 
-                <script>
-                    var val= 0;
-                    {%  for role in user.roles %}
-                        {% if role == 'ROLE_ADMIN' %}
-                            var val = 1;
-                        {% elseif role == 'ROLE_USER' %}
-                            var val = 2;
-                        {% endif %}
-                    {% endfor %}
-                    if(val == 1) {
-                        $('#roles').val('ROLE_ADMIN');
-                    } else if (val == 2) {
-                        $('#roles').val('ROLE_USER');
-                    }
-                </script>
+                {%  for role in user.roles %}
+                    {% if role == 'ROLE_ADMIN' %}
+                        <script>$('#utilisateur_roles').val(0)</script>
+                    {% elseif role == 'ROLE_USER' %}
+                        <script>$('#utilisateur_roles').val(1)</script>
+                    {% endif %}
+                {% endfor %}
 
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="delUser" tabindex="-1"
+         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete This user</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure to delete this user ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-success" href="{{ path('delete_user',{id: user.id }) }}">Valid</a>
+                </div>
             </div>
         </div>
     </div>
