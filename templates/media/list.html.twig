@@ -10,6 +10,12 @@
                     <div class="carre">
                         <p>{{ media.name }}</p>
                     </div>
+                    <div>
+                        <a href="{{ path("media_update", {id : media.id}) }}">
+                            <button class="btn btn-primary">update</button>
+                        </a>
+
+                    </div>
                 </div>
             </div>
         {% endfor %}
