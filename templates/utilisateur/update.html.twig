@@ -1,12 +1,14 @@
 {%  extends 'layout.html.twig' %}
 
+{% block title %} Music Player - Edit User {% endblock %}
+
 {% block main %}
 <div class="row">
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5">
             <div class="card-body">
                 <h2 class="card-title text-center" style="margin-bottom: 25px">Edit User</h2>
-                <form action="{{ path('edit_user', {id : user.id}) }}" method="post">
+                {{ form_start(form) }}
                     <div>
                         {{ form_row(form.lastname) }}
                     </div>
@@ -16,17 +18,44 @@
                     <div>
                         {{ form_row(form.email) }}
                     </div>
+                    <div>
+                        {{ form_row(form.roles) }}
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                     <hr class="my-4">
-                    <button class="btn btn-lg btn-outline-success btn-block" type="submit">Update</button>
-                </form>
-                <div>
-                    <label for="select_admin" class="require">Roles</label>
-                    <br>
-                    <select id="select_admin" class="selectpicker" multiple>
-                        <option>Admin</option>
-                        <option>User</option>
-                    </select>
+                    <button class="btn btn-lg btn-outline-success " type="submit">Update</button>
+                    <button class="btn btn-lg btn-outline-danger" data-toggle="modal" data-id="{{ user.id }}" data-target="#delUser"><span class="oi oi-trash"></span></button>
+
+                {{ form_end(form) }}
+
+                {%  for role in user.roles %}
+                    {% if role == 'ROLE_ADMIN' %}
+                        <script>$('#utilisateur_roles').val(0)</script>
+                    {% elseif role == 'ROLE_USER' %}
+                        <script>$('#utilisateur_roles').val(1)</script>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="delUser" tabindex="-1"
+         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete This user</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure to delete this user ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-success" href="{{ path('delete_user',{id: user.id }) }}">Valid</a>
                 </div>
             </div>
         </div>

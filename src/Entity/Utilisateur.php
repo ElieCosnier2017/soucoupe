@@ -18,13 +18,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Utilisateur implements UserInterface
 {
-//    /**
-//     * @return mixed
-//     */
-//    public function getId()
-//    {
-//        return $this->id;
-//    }
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @param mixed $id
@@ -102,12 +102,6 @@ class Utilisateur implements UserInterface
      * @ORM\Column(type="json_array")
      */
     private $roles = [];
-
-
-    public function getId()
-    {
-        return $this->id;
-    }
 
     public function getLastname(): ?string
     {
