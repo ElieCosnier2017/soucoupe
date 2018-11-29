@@ -4,8 +4,6 @@ namespace App\Form;
 
 use App\Entity\Media;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,7 +15,7 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        if($options['fields'] = "update"){
+        if($options['fields'] == "update"){
             $builder
                 ->add('name', TextType::class, array('attr' => array(
                     'class' => 'form-control',
@@ -25,6 +23,8 @@ class MediaType extends AbstractType
                 ->add('description',TextType::class, array('attr' => array(
                     'class' => 'form-control',
                     'placeholder' => 'ici votre description ...')))
+                ->add('picture', FileType::class, ['mapped'=> false])
+                ->add('media', FileType::class, ['mapped'=> false])
                 ->add('genre', null, array('attr' => array(
                     'class' => 'form-control'
                 )));
@@ -41,7 +41,9 @@ class MediaType extends AbstractType
                     'attr' => array(
                         'class' => 'form-control')
                 ))
-                ->add('picture', FileType::class)
+                ->add('picture', FileType::class, ['mapped'=> false])
+                ->add('media', FileType::class, ['mapped'=> false])
+
                 ->add('genre', null, array('attr' => array(
                     'class' => 'form-control'
                 )));
@@ -53,7 +55,7 @@ class MediaType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Media::class,
-            'fields' => false
+            'fields' => false,
         ]);
     }
 }
