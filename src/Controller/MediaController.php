@@ -34,6 +34,7 @@ class MediaController extends Controller
         $media = new Media();
         $mediaForm = $this->createForm(MediaType::class, $media);
         $mediaForm->handleRequest($request);
+        $utilisateur = $this->getUser();
         if ($mediaForm->isSubmitted() && $mediaForm->isValid()) {
 
             // $file stores the uploaded PDF file
@@ -62,6 +63,7 @@ class MediaController extends Controller
             // instead of its contents
             $media->setPicture($fileName);
             $media->setExtension($extension);
+            $media->setUtilisateurs($utilisateur);
 
 
             $em->persist($media);
