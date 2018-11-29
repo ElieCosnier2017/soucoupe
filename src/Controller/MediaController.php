@@ -7,6 +7,7 @@ use App\Entity\Media;
 use App\Form\MediaType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -140,14 +141,14 @@ class MediaController extends Controller
      * @Route("/admin/media/delete/{id}", name="media_delete", requirements={"id":"\d+"})
      */
     public function delete(EntityManagerInterface $em, Media $media) {
-        if(count($media->getIdeas()) > 0){
-            $this->addFlash('error', "You can't delete this media!!");
-            return $this->redirectToRoute('media');
-        }
-
+        $genreofMedia = new Genre();
+        $genreofMedia = $media->getGenre();
+        $fileName = $media->getPicture();
         $em->remove($media);
         $em->flush();
         $this->addFlash("success", "Media successfully deleted!");
-        return $this->redirectToRoute("media");
+        $fs = new Filesystem();
+        $fs->remove($this->get('kernel')->getRootDir().'/../public/uploads/files/'.$fileName);
+        return $this->redirectToRoute("media", array('id' => $genreofMedia->getId()));
     }
 }
