@@ -83,13 +83,29 @@ class MediaController extends Controller
      * @Route("/admin/media/update/{id}", name="media_update", requirements={"id":"\d+"})
      */
     public function update(Media $media, Request $request, EntityManagerInterface $em) {
-        $media->setPicture(
-            new File($this->getParameter('file_directory').'/'.$media->getPicture())
-        );
-        $mediaForm = $this->createForm(MediaType::class, $media);
+
+        $mediaForm = $this->createForm(MediaType::class, $media, ['fields' => 'update']);
         $mediaForm->handleRequest($request);
 
         if($mediaForm->isSubmitted() && $mediaForm->isValid()) {
+            //dump($mediaForm);
+            $file = $request->request->get('_picture');
+
+            $filename = $this->generateUniqueFileName().'.'.$file->guessExtension();
+            $ext = $file->guessExtension();
+
+            // Move the file to the directory where brochures are stored
+            try {
+                $file->move(
+                    $this->getParameter('file_directory'),
+                    $filename
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+            $media->setPicture($filename);
+            $media->setExtension($ext);
+
             $em->persist($media);
             $em->flush();
 
@@ -99,7 +115,7 @@ class MediaController extends Controller
             return $this->redirectToRoute('media', array('id' => $genreofMedia->getId()));
         }
 
-        return $this->render('media/add.html.twig', [
+        return $this->render('media/update.html.twig', [
             'MediaForm' => $mediaForm->createView()
         ]);
     }

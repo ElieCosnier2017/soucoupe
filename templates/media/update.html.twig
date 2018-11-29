@@ -1,0 +1,23 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} MEDIA {% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h2 class="card-title text-center" style="margin-bottom: 25px">update Media</h2>
+                    {{ form_start(MediaForm) }}
+                    {{ form_row(MediaForm.name) }}
+                    {{ form_row(MediaForm.description) }}
+                    <input type="file" id="picture" name="_picture">
+                    {{ form_row(MediaForm.genre) }}
+                    <hr class="my-4">
+                    <button class="btn btn-lg btn-outline-success btn-block" type="submit">Valid</button>
+                    {{ form_end(MediaForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
