@@ -14,14 +14,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class UtilisateurController extends Controller
 {
     /**
-     * @Route("/home", name="home")
-     */
-    public function index(){
-        return $this->render("main/index.html.twig");
-
-    }
-
-    /**
      * @Route("/admin/listuser", name="list_user")
      */
     public function listuser(EntityManagerInterface $em){

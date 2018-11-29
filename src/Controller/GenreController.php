@@ -29,7 +29,8 @@ class GenreController extends Controller
         $genresFilms =$em->getRepository(Genre::class)->findBy(['typemedia'=>1]);
 
         return $this->render('genre/list.html.twig', [
-            'genres' => $genresFilms
+            'genres' => $genresFilms,
+            'controller_name' => 'Films',
         ]);
     }
 
@@ -40,7 +41,8 @@ class GenreController extends Controller
         $genresMusiques =$em->getRepository(Genre::class)->findBy(['typemedia'=>2]);
 
         return $this->render('genre/list.html.twig', [
-            'genres' => $genresMusiques
+            'genres' => $genresMusiques,
+            'controller_name' => 'Musics',
         ]);
     }
 

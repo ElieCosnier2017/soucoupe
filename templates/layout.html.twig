@@ -24,7 +24,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="{{ path('home') }}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('films') }}">Film</a>
@@ -32,24 +32,20 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('musiques') }}">Music</a>
                     </li>
-                    {% if is_granted("ROLE_USER") %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="">Menu User</a>
-                        </li>
-                    {% endif %}
-                    {% if is_granted("ROLE_ADMIN") %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="">Menu Admin</a>
-                        </li>
-                    {% endif %}
                     {% if is_granted("ROLE_USER") or is_granted("ROLE_ADMIN")  %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('media_create') }}">Add Media</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{ app.user.username }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 {% if is_granted("ROLE_ADMIN") %}
-                                <a class="dropdown-item" href="{{ path("list_user") }}">List User</a>
+                                <a class="dropdown-item" href="{{ path("list_user") }}">User List</a>
+                                {% endif %}
+                                {% if is_granted("ROLE_USER") %}
+                                <a class="dropdown-item" href="{{ path("list_user") }}">Edit Account</a>
                                 {% endif %}
                                 <a class="dropdown-item" href="{{ path("logout") }}">Logout</a>
                             </div>
