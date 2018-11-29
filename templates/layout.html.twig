@@ -15,7 +15,7 @@
     <link rel="icon" href="{{ asset('img/favicon.png') }}">
 </head>
 <body class="bg-secondary">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="box-shadow: 0px 3px 12px #080808d9;">
         <div class="container">
             <a class="navbar-brand" href="#">Music Player</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +23,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ path('home') }}">Home</a>
                     </li>
                     <li class="nav-item">
@@ -38,14 +38,15 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ app.user.username }}
+                                {{ app.user.lastname }} {{ app.user.firstname }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {% if is_granted("ROLE_ADMIN") %}
-                                <a class="dropdown-item" href="{{ path("list_user") }}">User List</a>
-                                {% endif %}
+                                <a class="dropdown-item" href="{{ path("list_user") }}">Edit Media</a>
                                 {% if is_granted("ROLE_USER") %}
-                                <a class="dropdown-item" href="{{ path("list_user") }}">Edit Account</a>
+                                    <a class="dropdown-item" href="{{ path("account", {id: app.user.id} ) }}">Account</a>
+                                {% endif %}
+                                {% if is_granted("ROLE_ADMIN") %}
+                                    <a class="dropdown-item" href="{{ path("list_user") }}">User List</a>
                                 {% endif %}
                                 <a class="dropdown-item" href="{{ path("logout") }}">Logout</a>
                             </div>
@@ -67,7 +68,7 @@
             {#Flash Message#}
             {% for label,messages in app.flashes %}
                 {% for message in messages %}
-                    <div class="alert-{{ label }}">
+                    <div class=" alert alert-{{ label }}">
                         {{ message }}
                     </div>
                 {% endfor %}
@@ -84,6 +85,7 @@
             </p>
         </div>
     </footer>
+    <script>$('.alert').show("slow").delay(2000).hide("slow");</script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>

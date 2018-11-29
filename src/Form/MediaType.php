@@ -17,7 +17,7 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        if($options['fields'] = "update"){
+        if($options['fields'] == "update"){
             $builder
                 ->add('name', TextType::class, array('attr' => array(
                     'class' => 'form-control',

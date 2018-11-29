@@ -23,6 +23,30 @@ class UtilisateurController extends Controller
     }
 
     /**
+     * @Route("/register", name="register")
+     */
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
+    {
+        $user = new Utilisateur();
+        $form = $this->createForm(UtilisateurType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
+            $user->setRoles(['ROLE_USER']);
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash("success", "Your account has been created!");
+            return $this->redirectToRoute("login");
+        }
+
+        return $this->render("utilisateur/register.html.twig", ["form" => $form->createView()]);
+    }
+
+    /**
      * @Route("/admin/edituser/{id}", name="edit_user", requirements={"id":"\d+"})
      */
     public function edituser($id, Request $request, EntityManagerInterface $em){
@@ -47,6 +71,27 @@ class UtilisateurController extends Controller
     }
 
     /**
+     * @Route("/account/{id}", name="account", requirements={"id":"\d+"})
+     */
+    public function editaccount($id, UserPasswordEncoderInterface $passwordEncoder, Request $request, EntityManagerInterface $em){
+
+        $repo = $em->getRepository(Utilisateur::class);
+        $user = $repo->find($id);
+        $form  = $this->createForm(UtilisateurType::class,$user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash("success", "This User account has been update!");
+            return $this->redirectToRoute("list_user");
+        }
+        return $this->render("utilisateur/account.html.twig", ["form" => $form->createView(),"user" => $user]);
+    }
+
+    /**
          * @Route("/admin/deluser/{id}", name="delete_user")
      */
     public function deluser($id,EntityManagerInterface $em)
@@ -57,30 +102,6 @@ class UtilisateurController extends Controller
         $em->flush();
         $this->addFlash("success", "User successfully deleted!");
         return $this->redirectToRoute("list_user");
-    }
-
-    /**
-     * @Route("/register", name="register")
-     */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
-    {
-        $user = new Utilisateur();
-        $form = $this->createForm(UtilisateurType::class, $user);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
-            $user->setRoles(['ROLE_USER']);
-            $em->persist($user);
-            $em->flush();
-
-            $this->addFlash("success", "Your account has been created!");
-            return $this->redirectToRoute("login");
-        }
-
-        return $this->render("utilisateur/register.html.twig", ["form" => $form->createView()]);
     }
 
     /**

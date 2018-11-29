@@ -16,25 +16,7 @@ class UtilisateurType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if($options['fields'] = "update"){
-            $builder
-                ->add('lastname', TextType::class, array('attr' => array(
-                    'class' => 'form-control',
-                    'placeholder' => 'Lastname')))
-                ->add('firstname', TextType::class, array('attr' => array(
-                    'class' => 'form-control',
-                    'placeholder' => 'Firstname')))
-                ->add('email', EmailType::class, array('attr' => array(
-                    'class' => 'form-control',
-                    'placeholder' => 'Email')))
-                ->add('roles', ChoiceType::class, array(
-                    'choices'  => array(
-                        'Admin' => null,
-                        'User' => true,
-                    ),'attr' => array(
-                        'class' => 'selectpicker'),
-                ));
-        } else {
+        if($options['fields'] == false) {
             $builder
                 ->add('lastname', TextType::class, array('attr' => array(
                     'class' => 'form-control',
@@ -59,6 +41,24 @@ class UtilisateurType extends AbstractType
                             'class' => 'form-control',
                             'placeholder' => 'Repeat Password')),
                     'invalid_message' => 'Your passwords do not match!'
+                ));
+        } else  {
+            $builder
+                ->add('lastname', TextType::class, array('attr' => array(
+                    'class' => 'form-control',
+                    'placeholder' => 'Lastname')))
+                ->add('firstname', TextType::class, array('attr' => array(
+                    'class' => 'form-control',
+                    'placeholder' => 'Firstname')))
+                ->add('email', EmailType::class, array('attr' => array(
+                    'class' => 'form-control',
+                    'placeholder' => 'Email')))
+                ->add('roles', ChoiceType::class, array(
+                    'choices'  => array(
+                        'Admin' => null,
+                        'User' => true,
+                    ),'attr' => array(
+                        'class' => 'selectpicker'),
                 ));
         }
     }

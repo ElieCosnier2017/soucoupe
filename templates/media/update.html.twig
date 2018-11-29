@@ -4,10 +4,13 @@
 
 {% block main %}
     <div class="row">
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-            <div class="card card-signin my-5">
+        <div class="col-sm-9 col-md-7 col-lg-7 mx-auto">
+            <div class="card card-signin my-3">
+                <div class="card-header">
+                    <h1 class="card-title text-center">Edit Media</h1>
+                </div>
                 <div class="card-body">
-                    <h2 class="card-title text-center" style="margin-bottom: 25px">update Media</h2>
+                    <hr class="my-4">
                     {{ form_start(MediaForm) }}
                     {{ form_row(MediaForm.name) }}
                     {{ form_row(MediaForm.description) }}

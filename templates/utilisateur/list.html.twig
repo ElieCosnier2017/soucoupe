@@ -4,35 +4,43 @@
 
 {% block main %}
 <div class="row">
-    <h1>List of User</h1>
-    <table class="table">
-        <thead class="table-secondary">
-            <tr>
-                <th scope="col">Lastname</th>
-                <th scope="col">Firstname</th>
-                <th scope="col">Username</th>
-                <th scope="col">Email</th>
-                <th scope="col">Role</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody class="bg-light">
-        {% for user in allUsers %}
-            <tr>
-                <th>{{ user.lastname }}</th>
-                <td>{{ user.firstname }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.email }}</td>
-                <td>{% for role in user.roles %}
-                    {{ role }}
+    <div class="col-md-11 mx-auto">
+        <div class="card card-signin my-5">
+            <div class="card-header">
+                <h1 class="card-title">List of User</h1>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th scope="col">Lastname</th>
+                            <th scope="col">Firstname</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-light">
+                    {% for user in allUsers %}
+                        <tr>
+                            <th>{{ user.lastname }}</th>
+                            <td>{{ user.firstname }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{% for role in user.roles %}
+                                {{ role }}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a href="{{ path('edit_user', {'id': user.id}) }}" class="btn btn-outline-secondary">Edit User</a>
+                            </td>
+                        </tr>
                     {% endfor %}
-                </td>
-                <td>
-                    <a href="{{ path('edit_user', {'id': user.id}) }}" class="btn btn-outline-secondary">Edit User</a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    </div></div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

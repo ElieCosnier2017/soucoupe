@@ -19,37 +19,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Utilisateur implements UserInterface
 {
     /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMedia()
-    {
-        return $this->media;
-    }
-
-    /**
-     * @param mixed $media
-     */
-    public function setMedia($media)
-    {
-        $this->media = $media;
-    }
-    /**
      * @ORM\Column(type="integer")
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -102,6 +71,38 @@ class Utilisateur implements UserInterface
      * @ORM\Column(type="json_array")
      */
     private $roles = [];
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
+     * @param mixed $media
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
+    }
 
     public function getLastname(): ?string
     {
