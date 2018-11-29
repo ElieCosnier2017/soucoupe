@@ -14,7 +14,7 @@
                     {{ form_start(MediaForm) }}
                     {{ form_row(MediaForm.name) }}
                     {{ form_row(MediaForm.description) }}
-                    <input type="file" id="picture" name="_picture">
+                    {{ form_row(MediaForm.picture) }}
                     {{ form_row(MediaForm.genre) }}
                     <hr class="my-4">
                     <button class="btn btn-lg btn-outline-success btn-block" type="submit">Valid</button>

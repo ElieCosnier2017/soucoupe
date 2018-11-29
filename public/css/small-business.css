@@ -44,6 +44,12 @@ body {
   width: 100%;
 }
 
+.carre-media{
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+}
+
 .carre2:hover {
   transform: scale(0.95);
 }

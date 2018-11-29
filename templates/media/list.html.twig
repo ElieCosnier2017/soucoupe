@@ -5,16 +5,31 @@
 
     <div class="row">
         {% for media in medias %}
-            <div class="col-md-3">
+            {% set url = media.picture|split('_') %}
+            <div class="col-md-6 mx-auto">
                 <div class="card mb-4" id="{{ media.id }}">
-                    <div class="carre">
-                        <img src="{{ asset('uploads/files/' ~ media.picture) }}">
-                        <p>{{ media.name }}</p>
-                    </div>
-                    <div>
-                        <a href="{{ path("media_update", {id : media.id}) }}">
-                            <button class="btn btn-primary">update</button>
-                        </a>
+                    <div class="carre-media">
+                        <img class="card-img-top" src="{{ asset('uploads/files/' ~ media.picture ) }}">
+                        <div class="card-body">
+                            <p>{{ media.name }}</p>
+                            <p>{{ media.description }}</p>
+
+                            {% if media.extension == 'mp3' %}
+                                <audio controls>
+                                    <source src="{{ asset('uploads/files/' ~ url[0] ~ '_media.' ~ media.extension) }}" type="audio/mp3">
+                                </audio>
+                            {% elseif media.extension == 'mp4' or media.extension == 'webm' or media.extension == '3GPP' %}
+                                <video width="400" controls>
+                                    <source src="{{ asset('uploads/files/' ~ url[0] ~ '_media.' ~ media.extension) }}" type="video/{{ media.extension }}">
+                                    Your browser does not support HTML5 video.
+                                </video>
+                            {% else %}
+                                    <p> Ce type de fichier n'est pas pris en charge </p>
+                            {% endif %}
+                        </div>
+                        <div class="card-footer">
+                            <a href="{{ path("media_update", {id : media.id}) }}" class="btn btn-primary">update</a>
+                        </div>
                     </div>
                 </div>
             </div>
